@@ -3,17 +3,15 @@
 #include <typeinfo>
 
 int main() {
-    FixedPoint<12> a;
+    FixedPoint<16> a;
     FixedPoint<16> b;
     std::cin >> a >> b;
 
     std::cout << a << std::endl;
     std::cout << b << std::endl;
-    // FixedPoint c {a - b};
-    a *=b;
+
+    a/=b;
+    // FixedPoint c {a * b};
+    // c = a + b;
     std::cout << a << std::endl;
-
-    // std::cin >> a;
-
-    // std::cout << ((1 << 30) + (1 <<30)) << "\n";
 }
