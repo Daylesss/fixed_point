@@ -3,15 +3,14 @@
 #include <typeinfo>
 
 int main() {
-    FixedPoint<16> a;
-    FixedPoint<16> b;
+    // uint8_t size1, size2;
+    // std::cin >> size1 >> size2; 
+    FixedPoint<12> a;
+    FixedPoint<18> b;
     std::cin >> a >> b;
-
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-
-    a/=b;
-    // FixedPoint c {a * b};
-    // c = a + b;
-    std::cout << a << std::endl;
+    std::cout <<"input values:  " << a << " " << b << std::endl;
+    std::cout << a << " += " << b << "=>" << (a+=b) << std::endl;
+    std::cout << a << " -= " << b << "=>" << (a-=b) << std::endl;
+    std::cout << a << " *= " << b << " => " << (a*=b) << std::endl;
+    std::cout << a << " /= " << b << " => " << (a/=b) << std::endl;
 }

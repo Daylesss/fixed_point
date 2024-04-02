@@ -107,16 +107,6 @@ class FixedPoint {
             int64_t res = val;
             int64_t right_val = lead_to_common_size(right);
             res -= right_val;
-            // int8_t dif = exp - exp_;
-            // if (dif > 0) {
-            //     res -= (right.get_val() << dif);
-            // }
-            // else if (dif < 0) {
-            //     res -= (right.get_val() >> abs(dif));
-            // }
-            // else {
-            //     res -= right.get_val();
-            // };
             check_size(res);
             val = res;
             return *this;
@@ -131,9 +121,9 @@ class FixedPoint {
         template<uint8_t exp_>
         FixedPoint& operator*=(FixedPoint<exp_> &right){
             int64_t res = val;
-            int64_t right_val = lead_to_common_size(right);
+            int64_t right_val = right.get_val();
 
-            res = (res * right_val) >> exp;
+            res = (res * right_val) >> exp_;
             check_size(res);
             val = res;
             return *this;
@@ -152,24 +142,18 @@ class FixedPoint {
                 throw std::logic_error("Division by zero");
             }
             int64_t res = val;
-            int64_t right_val = lead_to_common_size(right);
-            std::cout << right << std::endl;
-
-            int64_t int_part = res / (1 << exp);
-            std::cout << int_part << std::endl;
-            int64_t frac_part = res % (1 << exp);
-            std::cout << frac_part << std::endl;
-
-            int_part = ((int_part * (1 << exp)) / right_val) * (1 << exp);
-            std::cout << int_part << std::endl;
-            frac_part = frac_part * (1 << exp) / right_val;
-            std::cout << frac_part << std::endl;
-
-            res = int_part + frac_part;
-
+            int64_t right_val = right.get_val();
+            res = (res * (1 << exp_) + (right_val >> 1)) / right_val;
             check_size(res);
             val = res;
             return *this;
+        };
+
+        template<uint8_t exp_>
+        FixedPoint operator/(FixedPoint<exp_> &right) const {
+            FixedPoint<exp> left = *this;
+            left /=right;
+            return left;
         };
 };
 
